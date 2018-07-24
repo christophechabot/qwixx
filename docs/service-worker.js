@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "https://github.com/christophechabot/qwixx/precache-manifest.558060082a5ccce866fd9394c5c549fd.js"
+  "https://christophechabot.github.com/qwixx/precache-manifest.7e25aa6121046374960f941a47b155a2.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "qwixx"});
