@@ -7,10 +7,10 @@
           :key="box.number"
           :index="index"
           :number="box.number"
-          :checked="box.checked"
+          :ticked="box.ticked"
           @clicked="onClicked(index)"/>
       </div>
-      <span :class="{ lock: true, checked: lock.checked }">
+      <span :class="{ lock: true, ticked: lock.ticked }">
         <span class="lock-container">
           <svg viewBox="0 0 14 18">
             <path
@@ -19,14 +19,7 @@
             />
           </svg>
         </span>
-        <span class="checked-overlay">
-          <svg viewBox="0 0 212.982 212.982">
-            <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312
-              c-6.99-6.99-18.322-6.99-25.312,0l-75.937,75.937L30.554,5.242c-6.99-6.99-18.322-6.99-25.312,0c-6.989,6.99-6.989,18.323,0,25.312
-              l75.937,75.936L5.242,182.427c-6.989,6.99-6.989,18.323,0,25.312c6.99,6.99,18.322,6.99,25.312,0l75.937-75.937l75.937,75.937
-              c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
-          </svg>
-        </span>
+        <TickedOverlay/>
       </span>
     </div>
   </div>
@@ -34,14 +27,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getNbChecked } from '@/helpers';
+import { getNbTicked } from '@/helpers';
 
 import NumberBox from '@/components/NumberBox';
+import TickedOverlay from '@/components/TickedOverlay';
 
 export default {
   name: 'ColorRow',
   components: {
-    NumberBox
+    NumberBox,
+    TickedOverlay
   },
   data: function() {
     return {};
@@ -66,7 +61,7 @@ export default {
       if (index < 10) {
         let hasNoFurtherTick = true;
         for (let i = index + 1; i < this.boxes.length; i++) {
-          if (this.boxes[i].checked) {
+          if (this.boxes[i].ticked) {
             hasNoFurtherTick = false;
           }
         }
@@ -74,7 +69,7 @@ export default {
           this.$store.dispatch('tickNumberBox', { color: this.color, index });
         }
       } else {
-        if (getNbChecked(this.boxes) >= 5) {
+        if (getNbTicked(this.boxes) >= 5) {
           this.$store.dispatch('tickNumberBox', { color: this.color, index: 10 });
           this.$store.dispatch('tickNumberBox', { color: this.color, index: 11 });
         }
@@ -124,26 +119,8 @@ export default {
           width: 22px;
         }
       }
-      .checked-overlay {
-        visibility: hidden;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, .5);
-         svg {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: $black;
-          width: 42px;
-        }
-      }
-      &.checked {
-        .checked-overlay {
+      &.ticked {
+        .ticked-overlay {
           visibility: visible;
         }
       }

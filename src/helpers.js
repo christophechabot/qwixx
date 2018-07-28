@@ -1,10 +1,10 @@
-export const getNbChecked = (boxes) => {
+export const getNbTicked = (boxes) => {
   return boxes
-    .filter(box => box.checked)
+    .filter(box => box.ticked)
     .length;
 }
 
 export const getTotal = (boxes) => {
-  const nbChecked = getNbChecked(boxes);
-  return nbChecked * (nbChecked + 1) / 2;
+  const nbTicked = getNbTicked(boxes);
+  return nbTicked * (nbTicked + 1) / 2;
 };

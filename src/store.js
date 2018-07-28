@@ -7,11 +7,11 @@ const initNumberBoxesArray = (isGoingUp) => {
   return [
     ...Array.from(new Array(11), (val, index) => ({ 
       number: isGoingUp ? (index + 2) : (12 - index),
-      checked: false
+      ticked: false
     })),
     {
       number: 0,
-      checked: false
+      ticked: false
     }
   ];
 }
@@ -31,7 +31,7 @@ export default new Vuex.Store({
       Vue.set(
         state.boxes[payload.color],
         payload.index,
-        Object.assign({}, state.boxes[payload.color][payload.index], { checked: true })
+        Object.assign({}, state.boxes[payload.color][payload.index], { ticked: true })
       );
     },
     tickMiss(state, index) {
