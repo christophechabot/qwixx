@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "/qwixx/precache-manifest.f7fa03ee663744646419e04c2b84f6c2.js"
+  "/qwixx/precache-manifest.944901a9f488b6040d638f3796481381.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "qwixx"});

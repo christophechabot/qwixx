@@ -40,6 +40,15 @@ export default new Vuex.Store({
         index,
         true
       )
+    },
+    emptySheet(state) {
+      state.boxes = {
+        red: initNumberBoxesArray(true),
+        yellow: initNumberBoxesArray(true),
+        green: initNumberBoxesArray(false),
+        blue: initNumberBoxesArray(false)
+      };
+      state.misses = [false, false, false, false];
     }
   },
   actions: {
@@ -48,6 +57,12 @@ export default new Vuex.Store({
     },
     tickMiss(context, index) {
       context.commit('tickMiss', index);
+    },
+    resetSheet(context) {
+      context.commit('emptySheet', { reset: true });
+    },
+    emptySheet(context) {
+      context.commit('emptySheet');
     }
   },
   getters: {
