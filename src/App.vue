@@ -4,7 +4,7 @@
       <svg
         class="reset-button"
         viewBox="0 0 286.052 286.052"
-        @click="onReset">
+        @click="onToggleResetModal">
         <path style="fill:currentColor;" d="M78.493,143.181H62.832v-0.125c0-43.623,34.809-80.328,79.201-80.122
           c21.642,0.098,41.523,8.841,55.691,23.135l25.843-24.931c-20.864-21.043-49.693-34.049-81.534-34.049
           c-63.629,0-115.208,51.955-115.298,116.075h-15.84c-9.708,0-13.677,6.49-8.823,14.437l33.799,33.504
@@ -14,6 +14,13 @@
           c20.873,21.007,49.702,33.996,81.534,33.996c63.432,0,114.869-51.579,115.28-115.298h15.867
           C284.872,143.655,288.832,137.156,283.978,129.236z"/>
       </svg>
+      <div
+        id="reset-modal"
+        :class="{ 'opened': resetModalOpened }">
+        <button @click="onNormalReset">Normal</button>
+        <button @click="onRainbowReset">Rainbow</button>
+        <button @click="onShuffleReset">Shuffle</button>
+      </div>
     </div>
     <div id="sheet">
       <ColorRow
@@ -54,6 +61,8 @@
 </template>
 
 <script>
+import { TYPE_NORMAL, TYPE_RAINBOW, TYPE_SHUFFLE } from './constants';
+
 import ColorRow from '@/components/ColorRow';
 import RulesMissedRow from '@/components/RulesMissedRow';
 import TotalRow from '@/components/TotalRow';
@@ -72,12 +81,30 @@ export default {
     RulesMissedRow,
     TotalRow
   },
+  data() {
+    return {
+      resetModalOpened: false
+    }
+  },
   methods: {
     onNumberBoxTicked(payload) {
       this.$store.dispatch('tickNumberBox', payload);
     },
-    onReset() {
-      this.$store.dispatch('resetSheet');
+    onToggleResetModal() {
+      this.resetModalOpened = !this.resetModalOpened;
+    },
+    onNormalReset() {
+      this.onReset(TYPE_NORMAL);
+    },
+    onRainbowReset() {
+      this.onReset(TYPE_RAINBOW);
+    },
+    onShuffleReset() {
+      this.onReset(TYPE_SHUFFLE);
+    },
+    onReset(type) {
+      this.$store.dispatch('resetSheet', type);
+      this.resetModalOpened = false;
     }
   },
   mounted() {
@@ -132,6 +159,7 @@ export default {
       }
     }
     .controls {
+      position: relative;
       display: inline-block;
       vertical-align: top;
       width: $side-width;
@@ -159,6 +187,29 @@ export default {
       }
       .redo-button {
         transform: scale(-1, 1);
+      }
+    }
+    #reset-modal {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      background-color: white;
+      border: 2px solid $black;
+      padding: 24px 32px;
+      z-index: 100;
+      button {
+        border: 3px dashed $black;
+        border-radius: 16px;
+        background: none;
+        outline: none;
+        color: $black;
+        font-size: 36px;
+        padding: 8px 16px;
+        margin: 12px 0;
+      }
+      &.opened {
+        display: block;
       }
     }
   }

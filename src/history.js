@@ -9,18 +9,20 @@ export default {
         };
       },
       created() {
-        this.$store.subscribe(mutation => {
-          if (
-            mutation.type === 'tickNumberBox'
-            || mutation.type === 'tickMiss'
-            || (mutation.type === 'emptySheet' && mutation.payload && mutation.payload.reset)
-          ) {
-            this.done.push(mutation);
-          }
-          if (this.newMutation) {
-            this.undone = [];
-          }
-        })
+        if (this.$store) {
+          this.$store.subscribe(mutation => {
+            if (
+              mutation.type === 'tickNumberBox'
+              || mutation.type === 'tickMiss'
+              || (mutation.type === 'emptySheet' && mutation.payload && mutation.payload.reset)
+            ) {
+              this.done.push(mutation);
+            }
+            if (this.newMutation) {
+              this.undone = [];
+            }
+          });
+        }
       },
       methods: {
         undo() {

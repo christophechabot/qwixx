@@ -1,12 +1,15 @@
 <template>
   <span
-    :class="{ 'number-box': true, 'ticked': ticked }"
+    :class="`number-box ${ticked ? 'ticked' : ''} ${color}`"
     @click="onClick">
-    <span class="number-box-text">
-      {{ number }}
-    </span>
-    <span class="hover-overlay"></span>
-    <TickedOverlay/>
+    <div class="number-box-container">
+      <span class="number-box-text-container">
+        <span class="number-box-text">
+          {{ number }}
+        </span>
+        <TickedOverlay/>
+      </span>
+    </div>
   </span>
 </template>
 
@@ -30,6 +33,10 @@ export default {
     ticked: {
       type: Boolean,
       required: true
+    },
+    color: {
+      type: String,
+      required: true
     }
   },
   methods: {
@@ -48,10 +55,21 @@ export default {
   .number-box {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
+    width: 68px;
+    height: 85px;
     overflow: hidden;
+    .number-box-container {
+      border-radius: 0;
+      margin: 8px 0;
+      padding: 4px 0;
+    }
+    .number-box-text-container {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+    }
     .number-box-text {
       position: absolute;
       top: 50%;
@@ -59,19 +77,20 @@ export default {
       transform: translate(-50%, -50%);
       font-size: 40px;
     }
-    .hover-overlay {
-      visibility: hidden;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
+    .ticked-overlay { 
       border-radius: 8px;
-      background: rgba(0, 0, 0, .2);
     }
-    &:not(:last-of-type) {
-      margin-right: 4px;
+    &:first-of-type {
+      padding-left: 16px;
+      .number-box-container {
+        border-radius: 10px 0 0 10px;
+      }
+    }
+    &:last-of-type {
+      padding-right: 4px;
+      .number-box-container {
+        border-radius: 0 10px 10px 0;
+      }
     }
     &:not(.ticked) {
       cursor: pointer;
@@ -79,6 +98,46 @@ export default {
     &.ticked {
       .ticked-overlay {
         visibility: visible;
+      }
+    }
+    &.red {
+      background-color: $red;
+      .number-box-container {
+        background-color: $red-dark;
+        .number-box-text-container {
+          background-color: $red-light;
+          color: $red;
+        }
+      }
+    }
+    &.green {
+      background-color: $green;
+      .number-box-container {
+        background-color: $green-dark;
+        .number-box-text-container {
+          background-color: $green-light;
+          color: $green;
+        }
+      }
+    }
+    &.yellow {
+      background-color: $yellow;
+      .number-box-container {
+        background-color: $yellow-dark;
+        .number-box-text-container {
+          background-color: $yellow-light;
+          color: $yellow;
+        }
+      }
+    }
+    &.blue {
+      background-color: $blue;
+      .number-box-container {
+        background-color: $blue-dark;
+        .number-box-text-container {
+          background-color: $blue-light;
+          color: $blue;
+        }
       }
     }
   } 
