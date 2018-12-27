@@ -1,6 +1,6 @@
 # qwixx
 
-https://christophechabot.github.io/qwixx/
+Live version: https://christophechabot.github.io/qwixx/
 
 This is an digital adaptive version of the Qwixx dice game sheet. (https://boardgamegeek.com/boardgame/131260/qwixx)
 
